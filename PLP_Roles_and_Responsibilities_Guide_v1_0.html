@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PLP Roles &amp; Responsibilities — QMS Guide</title>
+<style>
+  /* ── Reset & base ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; scroll-behavior: smooth; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #F5F4F0;
+    color: #1C1C1A;
+    line-height: 1.6;
+  }
+
+  /* ── Colour tokens ── */
+  :root {
+    --plp-gold:   #D4A017;
+    --plp-dark:   #2C1A0E;
+    --plp-maroon: #6B1A2A;
+    --blue-50:  #E6F1FB; --blue-600: #185FA5; --blue-800: #0C447C;
+    --teal-50:  #E1F5EE; --teal-600: #0F6E56; --teal-800: #085041;
+    --amber-50: #FAEEDA; --amber-600: #BA7517; --amber-800: #633806;
+    --purple-50:#EEEDFE; --purple-600:#534AB7; --purple-800:#3C3489;
+    --coral-50: #FAECE7; --coral-600: #993C1D; --coral-800: #712B13;
+    --green-50: #EAF3DE; --green-600: #3B6D11; --green-800: #27500A;
+    --pink-50:  #FBEAF0; --pink-600:  #993556; --pink-800:  #72243E;
+    --gray-100: #D3D1C7; --gray-200: #B4B2A9; --gray-600: #5F5E5A;
+    --red-50:   #FCEBEB; --red-600:  #A32D2D;
+    --surface:  #FFFFFF;
+    --page-bg:  #F5F4F0;
+    --border:   rgba(0,0,0,0.10);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+  }
+
+  /* ── Header ── */
+  .page-header {
+    background: var(--plp-dark);
+    color: #FFF;
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+  }
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .header-brand { display: flex; align-items: center; gap: 12px; }
+  .header-logo {
+    width: 36px; height: 36px; background: var(--plp-gold);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px; color: var(--plp-dark); flex-shrink: 0;
+  }
+  .header-title { font-size: 15px; font-weight: 600; line-height: 1.2; }
+  .header-sub { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 1px; }
+  .header-meta {
+    font-size: 11px; color: rgba(255,255,255,0.5);
+    text-align: right; line-height: 1.5;
+  }
+
+  /* ── Nav tabs ── */
+  .nav-tabs {
+    background: var(--plp-maroon);
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-tabs::-webkit-scrollbar { display: none; }
+  .nav-tab {
+    padding: 10px 20px;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.65);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: all .2s;
+    background: none;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    font-family: inherit;
+    letter-spacing: 0.02em;
+  }
+  .nav-tab:hover { color: #FFF; background: rgba(255,255,255,0.07); }
+  .nav-tab.active {
+    color: #FFF;
+    border-bottom-color: var(--plp-gold);
+    background: rgba(255,255,255,0.10);
+  }
+
+  /* ── Layout ── */
+  .page-content { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ── Hero banner ── */
+  .hero {
+    background: linear-gradient(135deg, var(--plp-dark) 0%, #4A2510 100%);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+    color: #FFF;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    right: -40px; top: -40px;
+    width: 200px; height: 200px;
+    background: rgba(212,160,23,0.15);
+    border-radius: 50%;
+  }
+  .hero-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--plp-gold); margin-bottom: 8px;
+  }
+  .hero h1 { font-size: 26px; font-weight: 700; line-height: 1.2; margin-bottom: 10px; }
+  .hero p { font-size: 14px; color: rgba(255,255,255,0.75); max-width: 560px; line-height: 1.65; }
+
+  /* ── Section heading ── */
+  .section-heading {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 1.25rem;
+  }
+  .section-heading h2 { font-size: 18px; font-weight: 600; }
+  .section-heading .tag {
+    font-size: 11px; font-weight: 500; padding: 3px 10px;
+    border-radius: 20px; background: var(--amber-50); color: var(--amber-800);
+  }
+  .section-desc {
+    font-size: 13px; color: var(--gray-600); margin-bottom: 1.5rem;
+    line-height: 1.6; max-width: 680px;
+  }
+
+  /* ── Info callout ── */
+  .callout {
+    border-left: 4px solid var(--blue-600);
+    background: var(--blue-50);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--blue-800);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+  .callout.amber {
+    border-color: var(--amber-600); background: var(--amber-50); color: var(--amber-800);
+  }
+  .callout.teal {
+    border-color: var(--teal-600); background: var(--teal-50); color: var(--teal-800);
+  }
+  .callout strong { font-weight: 600; }
+
+  /* ── Role cards grid ── */
+  .roles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+  .role-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow .2s, transform .2s;
+  }
+  .role-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+  .role-card-header {
+    padding: 1rem 1.25rem 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px; flex-shrink: 0;
+    letter-spacing: 0.02em;
+  }
+  .role-name { font-size: 14px; font-weight: 600; line-height: 1.3; }
+  .role-person { font-size: 12px; color: var(--gray-600); margin-top: 2px; }
+  .role-card-body { padding: 1rem 1.25rem 1.25rem; }
+  .resp-list { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .resp-list li {
+    font-size: 13px; color: #333; line-height: 1.45;
+    padding-left: 16px; position: relative;
+  }
+  .resp-list li::before {
+    content: '';
+    position: absolute;
+    left: 4px; top: 7px;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+  }
+  .process-tags { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 5px; }
+  .ptag {
+    font-size: 10px; font-weight: 500; padding: 3px 9px;
+    border-radius: 20px; letter-spacing: 0.01em; line-height: 1.4;
+  }
+
+  /* ── Colour variants for cards ── */
+  .card-blue .role-card-header { background: var(--blue-50); }
+  .card-blue .avatar { background: var(--blue-600); color: #FFF; }
+  .card-blue .resp-list li::before { background: var(--blue-600); }
+  .card-blue .ptag { background: var(--blue-50); color: var(--blue-800); border: 1px solid rgba(24,95,165,0.2); }
+
+  .card-teal .role-card-header { background: var(--teal-50); }
+  .card-teal .avatar { background: var(--teal-600); color: #FFF; }
+  .card-teal .resp-list li::before { background: var(--teal-600); }
+  .card-teal .ptag { background: var(--teal-50); color: var(--teal-800); border: 1px solid rgba(15,110,86,0.2); }
+
+  .card-amber .role-card-header { background: var(--amber-50); }
+  .card-amber .avatar { background: var(--amber-600); color: #FFF; }
+  .card-amber .resp-list li::before { background: var(--amber-600); }
+  .card-amber .ptag { background: var(--amber-50); color: var(--amber-800); border: 1px solid rgba(186,117,23,0.2); }
+
+  .card-purple .role-card-header { background: var(--purple-50); }
+  .card-purple .avatar { background: var(--purple-600); color: #FFF; }
+  .card-purple .resp-list li::before { background: var(--purple-600); }
+  .card-purple .ptag { background: var(--purple-50); color: var(--purple-800); border: 1px solid rgba(83,74,183,0.2); }
+
+  .card-coral .role-card-header { background: var(--coral-50); }
+  .card-coral .avatar { background: var(--coral-600); color: #FFF; }
+  .card-coral .resp-list li::before { background: var(--coral-600); }
+  .card-coral .ptag { background: var(--coral-50); color: var(--coral-800); border: 1px solid rgba(153,60,29,0.2); }
+
+  .card-green .role-card-header { background: var(--green-50); }
+  .card-green .avatar { background: var(--green-600); color: #FFF; }
+  .card-green .resp-list li::before { background: var(--green-600); }
+  .card-green .ptag { background: var(--green-50); color: var(--green-800); border: 1px solid rgba(59,109,17,0.2); }
+
+  .card-pink .role-card-header { background: var(--pink-50); }
+  .card-pink .avatar { background: var(--pink-600); color: #FFF; }
+  .card-pink .resp-list li::before { background: var(--pink-600); }
+  .card-pink .ptag { background: var(--pink-50); color: var(--pink-800); border: 1px solid rgba(153,53,86,0.2); }
+
+  /* ── Stream section header ── */
+  .stream-header {
+    display: flex; align-items: center; gap: 12px;
+    margin: 2rem 0 1rem;
+  }
+  .stream-line {
+    flex: 1; height: 1px; background: var(--border);
+  }
+  .stream-badge {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 4px 14px; border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  /* ── Process ownership table ── */
+  .ownership-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 2rem;
+    font-size: 13px;
+  }
+  .ownership-table thead tr {
+    background: var(--plp-dark);
+    color: #FFF;
+  }
+  .ownership-table th {
+    padding: 11px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.03em;
+  }
+  .ownership-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.45;
+  }
+  .ownership-table tbody tr:last-child td { border-bottom: none; }
+  .ownership-table tbody tr:hover { background: #FAFAF8; }
+  .stream-row td {
+    background: #F0EFE9;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray-600);
+    padding: 7px 14px;
+  }
+  .owner-chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 12px; font-weight: 500; padding: 2px 9px 2px 6px;
+    border-radius: 20px; white-space: nowrap;
+  }
+  .owner-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+  .clause-tag {
+    font-size: 11px; font-weight: 600; padding: 2px 7px;
+    border-radius: 4px; background: var(--gray-100); color: #333;
+    white-space: nowrap;
+  }
+
+  /* ── RACI table ── */
+  .raci-section { margin-bottom: 2rem; }
+  .raci-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    font-size: 12px;
+  }
+  .raci-table th {
+    background: var(--plp-dark); color: #FFF;
+    padding: 10px 12px; text-align: center;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
+  }
+  .raci-table th:first-child { text-align: left; }
+  .raci-table td {
+    padding: 9px 12px; border-bottom: 1px solid var(--border);
+    text-align: center; vertical-align: middle;
+  }
+  .raci-table td:first-child { text-align: left; font-weight: 500; }
+  .raci-table tbody tr:last-child td { border-bottom: none; }
+  .raci-table tbody tr:hover { background: #FAFAF8; }
+  .raci-r { font-size: 11px; font-weight: 700; padding: 3px 7px; border-radius: 4px; background: #DBEAFE; color: #1E40AF; }
+  .raci-a { font-size: 11px; font-weight: 700; padding: 3px 7px; border-radius: 4px; background: #FEF3C7; color: #92400E; }
+  .raci-c { font-size: 11px; font-weight: 700; padding: 3px 7px; border-radius: 4px; background: #D1FAE5; color: #064E3B; }
+  .raci-i { font-size: 11px; font-weight: 700; padding: 3px 7px; border-radius: 4px; background: #F5F3FF; color: #4C1D95; }
+  .raci-legend {
+    display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 1rem;
+    font-size: 12px;
+  }
+  .raci-legend-item { display: flex; align-items: center; gap: 6px; }
+
+  /* ── QMS explanation section ── */
+  .explainer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .explainer-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .explainer-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; margin-bottom: 10px;
+  }
+  .explainer-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .explainer-card p { font-size: 12px; color: var(--gray-600); line-height: 1.55; }
+
+  /* ── Process map section ── */
+  .process-map {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 2rem;
+  }
+  .process-map-header {
+    background: var(--plp-dark); color: #FFF;
+    padding: 12px 20px; font-size: 13px; font-weight: 600;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .pm-stream {
+    padding: 16px 20px 12px;
+  }
+  .pm-stream-title {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.10em;
+    text-transform: uppercase; color: var(--gray-600); margin-bottom: 10px;
+  }
+  .pm-processes {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .pm-process {
+    display: flex; align-items: center; gap: 7px;
+    background: var(--page-bg); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 7px 12px;
+    font-size: 12px; cursor: default;
+  }
+  .pm-process .num {
+    font-size: 10px; font-weight: 700; width: 18px; height: 18px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .pm-divider { border: none; border-top: 1px solid var(--border); }
+
+  /* ── FAQ accordion ── */
+  .faq-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 2rem; }
+  .faq-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  .faq-q {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 14px 18px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--plp-dark);
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    line-height: 1.4;
+  }
+  .faq-q:hover { background: #FAFAF8; }
+  .faq-chevron {
+    font-size: 12px; color: var(--gray-600);
+    transition: transform .2s; flex-shrink: 0;
+  }
+  .faq-item.open .faq-chevron { transform: rotate(180deg); }
+  .faq-a {
+    display: none;
+    padding: 0 18px 16px;
+    font-size: 13px;
+    color: #444;
+    line-height: 1.65;
+    border-top: 1px solid var(--border);
+  }
+  .faq-item.open .faq-a { display: block; }
+
+  /* ── Footer ── */
+  .page-footer {
+    background: var(--plp-dark); color: rgba(255,255,255,0.55);
+    text-align: center; font-size: 12px; padding: 1.25rem;
+    margin-top: 3rem;
+  }
+  .page-footer strong { color: rgba(255,255,255,0.85); }
+
+  /* ── Utility ── */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+  .mt-2 { margin-top: 2rem; }
+  .badge {
+    display: inline-block; font-size: 11px; font-weight: 600;
+    padding: 3px 10px; border-radius: 20px;
+  }
+  .badge-green { background: var(--green-50); color: var(--green-800); }
+  .badge-amber { background: var(--amber-50); color: var(--amber-800); }
+  .badge-red   { background: var(--red-50); color: var(--red-600); }
+
+  @media (max-width: 640px) {
+    .page-content { padding: 1.25rem; }
+    .hero { padding: 1.5rem; }
+    .hero h1 { font-size: 20px; }
+    .header-inner { padding: 0.75rem 1rem; }
+    .roles-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header class="page-header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="header-logo">PLP</div>
+      <div>
+        <div class="header-title">Roles &amp; Responsibilities Guide</div>
+        <div class="header-sub">Quality Management System · ISO 9001:2015</div>
+      </div>
+    </div>
+    <div class="header-meta">
+      v1.0 · January 2026<br>
+      Based on R&amp;R Matrix v2.3
+    </div>
+  </div>
+  <nav class="nav-tabs">
+    <button class="nav-tab active" onclick="showTab('overview')">Overview</button>
+    <button class="nav-tab" onclick="showTab('roles')">Roles &amp; People</button>
+    <button class="nav-tab" onclick="showTab('ownership')">Process Ownership</button>
+    <button class="nav-tab" onclick="showTab('raci')">RACI Matrix</button>
+    <button class="nav-tab" onclick="showTab('faq')">FAQs</button>
+  </nav>
+</header>
+
+<!-- ═══ MAIN CONTENT ═══ -->
+<main class="page-content">
+
+  <!-- ══════════════ TAB: OVERVIEW ══════════════ -->
+  <section class="section active" id="tab-overview">
+
+    <div class="hero">
+      <div class="hero-label">PL Projects Ltd — QMS Staff Guide</div>
+      <h1>Who does what in our QMS?</h1>
+      <p>This guide explains the roles and responsibilities across PL Projects in plain language. Whether you are new to the team or just want a clear reminder, this page tells you who owns each process, what each person is responsible for, and how every role fits into our ISO 9001:2015 Quality Management System.</p>
+    </div>
+
+    <div class="callout">
+      <strong>New to the QMS?</strong> Start here. This page is designed to be easy to follow even if you have never worked with a Quality Management System before. Use the tabs at the top to explore different areas.
+    </div>
+
+    <div class="section-heading">
+      <h2>What is the QMS and why does it matter?</h2>
+    </div>
+    <p class="section-desc">
+      Our Quality Management System (QMS) is the set of processes, procedures, and responsibilities that ensure PL Projects consistently delivers high-quality training and consultancy to our clients. It also helps us maintain our ISO 9001:2015 accreditation, certified by SGS.
+    </p>
+
+    <div class="explainer-grid">
+      <div class="explainer-card">
+        <div class="explainer-icon" style="background:#E6F1FB;">📋</div>
+        <h3>Processes &amp; procedures</h3>
+        <p>Every key activity at PL Projects is documented as a process — from receiving a training enquiry all the way to reviewing how a course went. These are stored in our Process Architecture on SharePoint.</p>
+      </div>
+      <div class="explainer-card">
+        <div class="explainer-icon" style="background:#EAF3DE;">👤</div>
+        <h3>Process owners</h3>
+        <p>Each process has a named owner — someone responsible for making sure the process is followed and kept up to date. If you are a process owner, your name appears in this guide.</p>
+      </div>
+      <div class="explainer-card">
+        <div class="explainer-icon" style="background:#FAEEDA;">🔍</div>
+        <h3>Internal audits</h3>
+        <p>Each year, every process is reviewed through an internal audit. This checks that we are following our own procedures and identifies anything we can improve. Everyone may be asked to take part.</p>
+      </div>
+      <div class="explainer-card">
+        <div class="explainer-icon" style="background:#EEEDFE;">🏅</div>
+        <h3>ISO 9001 certification</h3>
+        <p>Our ISO 9001:2015 accreditation is assessed annually by an external body called SGS. They check our processes are effective and our records are in order. Our current certification runs to August 2027.</p>
+      </div>
+      <div class="explainer-card">
+        <div class="explainer-icon" style="background:#FAECE7;">📈</div>
+        <h3>Continual improvement</h3>
+        <p>The QMS is not just about passing audits. It helps us spot problems, record improvements, and make PL Projects a better organisation. Anyone can raise an improvement idea.</p>
+      </div>
+      <div class="explainer-card">
+        <div class="explainer-icon" style="background:#FBEAF0;">📁</div>
+        <h3>Document control</h3>
+        <p>Every document in the QMS has a version number and an issue date. Only the latest approved version should be used. Old documents must be removed from active use to avoid confusion.</p>
+      </div>
+    </div>
+
+    <div class="section-heading">
+      <h2>Our two business streams</h2>
+    </div>
+    <p class="section-desc">All 25 processes in the QMS are grouped into two streams. Every role at PL Projects sits within one or both of these streams.</p>
+
+    <div class="process-map">
+      <div class="process-map-header">🗺️ &nbsp;PL Projects — Process Architecture at a glance</div>
+      <div class="pm-stream">
+        <div class="pm-stream-title">🟡 Deliver business — what we sell and deliver to clients</div>
+        <div class="pm-processes">
+          <div class="pm-process">
+            <span class="num" style="background:#FAEEDA;color:#633806;">1</span>
+            Understand markets &amp; customers
+          </div>
+          <div class="pm-process">
+            <span class="num" style="background:#FAEEDA;color:#633806;">2</span>
+            Business strategy &amp; plans
+          </div>
+          <div class="pm-process">
+            <span class="num" style="background:#FAEEDA;color:#633806;">3</span>
+            Create &amp; maintain training courses
+          </div>
+          <div class="pm-process">
+            <span class="num" style="background:#FAEEDA;color:#633806;">4</span>
+            Market services
+          </div>
+          <div class="pm-process">
+            <span class="num" style="background:#FAEEDA;color:#633806;">5</span>
+            Receive training enquiry
+          </div>
+          <div class="pm-process">
+            <span class="num" style="background:#FAEEDA;color:#633806;">6</span>
+            Receive consultancy enquiry
+          </div>
+          <div class="pm-process">
+            <span class="num" style="background:#FAEEDA;color:#633806;">7</span>
+            Research &amp; present course options
+          </div>
+          <div class="pm-process">
+            <span class="num" style="background:#FAEEDA;color:#633806;">8</span>
+            Design bespoke training course
+          </div>
+          <div class="pm-process">
+            <span class="num" style="background:#FAEEDA;color:#633806;">9</span>
+            Research &amp; present consultancy options
+          </div>
+          <div class="pm-process">
+            <span class="num" style="background:#FAEEDA;color:#633806;">10</span>
+            Deliver training course
+          </div>
+          <div class="pm-process">
+            <span class="num" style="background:#FAEEDA;color:#633806;">11</span>
+            Review training course delivery
+          </div>
+          <div class="pm-process">
+            <span class="num" style="background:#FAEEDA;color:#633806;">12</span>
+            Deliver consultancy
+          </div>
+          <div class="pm-process">
+            <span class="num" style="background:#FAEEDA;color:#633806;">13</span>
+            Review consultancy delivery
+          </div>
+        </div>
+      </div>
+      <hr class="pm-divider">
+      <div class="pm-stream">
+        <div class="pm-stream-title">⚙️ Support business — how we run the company behind the scenes</div>
+        <div class="pm-processes">
+          <div class="pm-process">
+            <span class="num" style="background:#E6F1FB;color:#0C447C;">14</span>
+            Manage finances
+          </div>
+          <div class="pm-process">
+            <span class="num" style="background:#E6F1FB;color:#0C447C;">15</span>
+            Manage insurances
+          </div>
+          <div class="pm-process">
+            <span class="num" style="background:#E6F1FB;color:#0C447C;">16</span>
+            Health, safety &amp; environment
+          </div>
+          <div class="pm-process">
+            <span class="num" style="background:#E6F1FB;color:#0C447C;">17</span>
+            Achieve &amp; maintain accreditations
+          </div>
+          <div class="pm-process">
+            <span class="num" style="background:#E6F1FB;color:#0C447C;">18</span>
+            Operate the QMS
+          </div>
+          <div class="pm-process">
+            <span class="num" style="background:#E6F1FB;color:#0C447C;">19</span>
+            Manage procurement &amp; suppliers
+          </div>
+          <div class="pm-process">
+            <span class="num" style="background:#E6F1FB;color:#0C447C;">20</span>
+            Recruit &amp; develop people
+          </div>
+          <div class="pm-process">
+            <span class="num" style="background:#E6F1FB;color:#0C447C;">21</span>
+            Manage documented information
+          </div>
+          <div class="pm-process">
+            <span class="num" style="background:#E6F1FB;color:#0C447C;">22</span>
+            Manage infrastructure &amp; environment
+          </div>
+          <div class="pm-process">
+            <span class="num" style="background:#E6F1FB;color:#0C447C;">23</span>
+            Evaluate business performance
+          </div>
+          <div class="pm-process">
+            <span class="num" style="background:#E6F1FB;color:#0C447C;">24</span>
+            Conduct internal quality audits
+          </div>
+          <div class="pm-process">
+            <span class="num" style="background:#E6F1FB;color:#0C447C;">25</span>
+            Manage improvement
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout teal">
+      <strong>Want to explore further?</strong> Use the tabs above to see detailed role cards with responsibilities and process ownership, a full process ownership table, and a RACI matrix that explains who is Responsible, Accountable, Consulted, or Informed for each process.
+    </div>
+
+  </section>
+
+  <!-- ══════════════ TAB: ROLES & PEOPLE ══════════════ -->
+  <section class="section" id="tab-roles">
+
+    <div class="section-heading">
+      <h2>Roles &amp; People</h2>
+      <span class="tag">v2.3 · Jan 2026</span>
+    </div>
+    <p class="section-desc">
+      Below you will find every role at PL Projects, the person currently in that role, and a clear plain-English description of their key responsibilities. Each card also shows which QMS processes they own.
+    </p>
+    <div class="callout">
+      <strong>Note:</strong> Names show the person currently holding each role. Roles and responsibilities do not change when a person changes — the new person takes on the same responsibilities listed here.
+    </div>
+
+    <!-- DIRECTOR LEVEL -->
+    <div class="stream-header">
+      <span class="stream-badge" style="background:#FAEEDA;color:#633806;">Director level</span>
+      <div class="stream-line"></div>
+    </div>
+
+    <div class="roles-grid">
+      <div class="role-card card-blue">
+        <div class="role-card-header">
+          <div class="avatar">AP</div>
+          <div>
+            <div class="role-name">Director</div>
+            <div class="role-person">Andy Pochin</div>
+          </div>
+        </div>
+        <div class="role-card-body">
+          <ul class="resp-list">
+            <li>Sets the overall business strategy and annual plans for PL Projects</li>
+            <li>Reviews market data and customer needs to inform strategic direction</li>
+            <li>Approves purchases and financial decisions above £50</li>
+            <li>Ensures all legal and insurance requirements are kept up to date</li>
+            <li>Oversees health, safety, and environmental compliance</li>
+            <li>Conducts annual staff appraisals and monitors performance</li>
+            <li>Leads management reviews of business and QMS performance</li>
+            <li>Approves changes to the QMS structure and new processes</li>
+          </ul>
+          <div class="process-tags">
+            <span class="ptag">P1 — Understand markets</span>
+            <span class="ptag">P2 — Business strategy</span>
+            <span class="ptag">P14 — Manage finances</span>
+            <span class="ptag">P16 — H&amp;S</span>
+            <span class="ptag">P19 — Procurement</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="role-card card-teal">
+        <div class="role-card-header">
+          <div class="avatar">JR</div>
+          <div>
+            <div class="role-name">Training Director</div>
+            <div class="role-person">Josie Rothera</div>
+          </div>
+        </div>
+        <div class="role-card-body">
+          <ul class="resp-list">
+            <li>Creates, reviews, and maintains all PL Projects training courses</li>
+            <li>Signs off training proposals both internally and with clients</li>
+            <li>Delivers training courses directly to delegates</li>
+            <li>Reviews course delivery outcomes and drives improvements</li>
+            <li>Manages annual renewal of APM and other accreditations</li>
+            <li>Co-leads business strategy and planning with the Director</li>
+            <li>Evaluates business performance and leads management reporting</li>
+            <li>Provides trainer feedback on course quality after each delivery</li>
+          </ul>
+          <div class="process-tags">
+            <span class="ptag">P2 — Business strategy</span>
+            <span class="ptag">P3 — Training courses</span>
+            <span class="ptag">P5 — Training enquiry</span>
+            <span class="ptag">P7 — Course options</span>
+            <span class="ptag">P8 — Bespoke design</span>
+            <span class="ptag">P10 — Deliver training</span>
+            <span class="ptag">P11 — Review training</span>
+            <span class="ptag">P23 — Business performance</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OPERATIONS & CONSULTANCY -->
+    <div class="stream-header">
+      <span class="stream-badge" style="background:#E1F5EE;color:#085041;">Operations &amp; Consultancy</span>
+      <div class="stream-line"></div>
+    </div>
+
+    <div class="roles-grid">
+      <div class="role-card card-coral">
+        <div class="role-card-header">
+          <div class="avatar">DC</div>
+          <div>
+            <div class="role-name">Business Development Manager</div>
+            <div class="role-person">Dan Cascarina</div>
+          </div>
+        </div>
+        <div class="role-card-body">
+          <ul class="resp-list">
+            <li>Receives and logs consultancy enquiries from clients</li>
+            <li>Clarifies and confirms the requirements of each enquiry</li>
+            <li>Negotiates consultant daily rates and signs off contracts</li>
+            <li>Manages ongoing consultancy delivery and regular progress reviews</li>
+            <li>Obtains client feedback and records outcomes in the CRM</li>
+            <li>Screens and interviews potential new consultants</li>
+            <li>Holds end-of-contract review meetings with clients</li>
+          </ul>
+          <div class="process-tags">
+            <span class="ptag">P6 — Consultancy enquiry</span>
+            <span class="ptag">P12 — Deliver consultancy</span>
+            <span class="ptag">P13 — Review consultancy</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="role-card card-amber">
+        <div class="role-card-header">
+          <div class="avatar">NS</div>
+          <div>
+            <div class="role-name">Head of Delivery</div>
+            <div class="role-person">Nathan Spooner</div>
+          </div>
+        </div>
+        <div class="role-card-body">
+          <ul class="resp-list">
+            <li>Identifies the most suitable consultants for each client opportunity</li>
+            <li>Prioritises consultants who are benched or coming to the end of a contract</li>
+            <li>Submits CVs and agreed daily rates to clients for consideration</li>
+            <li>Coordinates interview scheduling between clients and consultants</li>
+            <li>Records all post-interview feedback and placement outcomes in the CRM</li>
+            <li>Confirms start dates on the Resource Utilisation Tracker</li>
+          </ul>
+          <div class="process-tags">
+            <span class="ptag">P9 — Consultancy options</span>
+            <span class="ptag">P12 — Deliver consultancy</span>
+            <span class="ptag">P13 — Review consultancy</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="role-card card-amber">
+        <div class="role-card-header">
+          <div class="avatar">MA</div>
+          <div>
+            <div class="role-name">Marketing Assistant</div>
+            <div class="role-person">TBC — role currently unassigned</div>
+          </div>
+        </div>
+        <div class="role-card-body">
+          <ul class="resp-list">
+            <li>Plans and delivers marketing campaigns for training courses and consultancy services</li>
+            <li>Designs and creates all marketing media (digital, social, print)</li>
+            <li>Posts and promotes job openings on relevant channels</li>
+            <li>Monitors campaign performance and reports results</li>
+            <li>Attends weekly content creation meetings</li>
+          </ul>
+          <div class="process-tags">
+            <span class="ptag">P4 — Market services</span>
+          </div>
+          <div style="margin-top:10px;">
+            <span class="badge badge-amber">⚠ Process owner TBC — action required</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUALITY MANAGEMENT -->
+    <div class="stream-header">
+      <span class="stream-badge" style="background:#EEEDFE;color:#3C3489;">Quality Management</span>
+      <div class="stream-line"></div>
+    </div>
+
+    <div class="roles-grid">
+      <div class="role-card card-purple">
+        <div class="role-card-header">
+          <div class="avatar">ND</div>
+          <div>
+            <div class="role-name">Quality Manager / Office Manager</div>
+            <div class="role-person">Nafa Duwebi</div>
+          </div>
+        </div>
+        <div class="role-card-body">
+          <ul class="resp-list">
+            <li>Creates, reviews, and controls all QMS documents — every document must be signed off before use</li>
+            <li>Designs and maintains the Process Architecture on SharePoint</li>
+            <li>Appoints process owners and advises them on their responsibilities</li>
+            <li>Plans and manages the entire annual internal audit programme</li>
+            <li>Maintains the Roles and Responsibilities Matrix</li>
+            <li>Manages the Active Improvement Log and tracks all actions to closure</li>
+            <li>Manages company insurances and annual renewal</li>
+            <li>Manages APM and other external accreditations</li>
+            <li>Ensures the office and remote working environments are appropriate</li>
+            <li>Manages procurement processes and the Approved Supplier List</li>
+          </ul>
+          <div class="process-tags">
+            <span class="ptag">P15 — Insurances</span>
+            <span class="ptag">P17 — Accreditations</span>
+            <span class="ptag">P18 — Operate QMS</span>
+            <span class="ptag">P19 — Procurement</span>
+            <span class="ptag">P21 — Document control</span>
+            <span class="ptag">P22 — Infrastructure</span>
+            <span class="ptag">P24 — Internal audits</span>
+            <span class="ptag">P25 — Manage improvement</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PEOPLE & CULTURE -->
+    <div class="stream-header">
+      <span class="stream-badge" style="background:#FBEAF0;color:#72243E;">People &amp; Culture</span>
+      <div class="stream-line"></div>
+    </div>
+
+    <div class="roles-grid">
+      <div class="role-card card-pink">
+        <div class="role-card-header">
+          <div class="avatar">JB</div>
+          <div>
+            <div class="role-name">HR Manager — People &amp; Culture</div>
+            <div class="role-person">Jessica Baily</div>
+          </div>
+        </div>
+        <div class="role-card-body">
+          <ul class="resp-list">
+            <li>Manages the full recruitment process from vacancy to offer</li>
+            <li>Creates and maintains job descriptions for all roles</li>
+            <li>Conducts preliminary screening and first-stage interviews</li>
+            <li>Verifies candidates' right to work in the UK</li>
+            <li>Performs reference and background checks on successful candidates</li>
+            <li>Onboards all new employees and records details in the HR System</li>
+            <li>Supports training and development planning for all staff</li>
+          </ul>
+          <div class="process-tags">
+            <span class="ptag">P20 — Recruit &amp; develop people</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FINANCE -->
+    <div class="stream-header">
+      <span class="stream-badge" style="background:#EAF3DE;color:#27500A;">Finance</span>
+      <div class="stream-line"></div>
+    </div>
+
+    <div class="roles-grid">
+      <div class="role-card card-green">
+        <div class="role-card-header">
+          <div class="avatar">FM</div>
+          <div>
+            <div class="role-name">Finance Manager</div>
+            <div class="role-person">Andy Pochin (Andrew)</div>
+          </div>
+        </div>
+        <div class="role-card-body">
+          <ul class="resp-list">
+            <li>Manages all accounts receivable (money coming in to PL Projects)</li>
+            <li>Manages all accounts payable (invoices and payments going out)</li>
+            <li>Maintains the general ledger and performs monthly reconciliations</li>
+            <li>Manages financial assets and liabilities on the balance sheet</li>
+            <li>Produces the monthly Financial Management Summary Report for directors</li>
+            <li>Updates the Finance Management Spreadsheet from Xero weekly</li>
+          </ul>
+          <div class="process-tags">
+            <span class="ptag">P14 — Manage finances</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADMINISTRATOR -->
+    <div class="stream-header">
+      <span class="stream-badge" style="background:#F1EFE8;color:#444441;">Administrator</span>
+      <div class="stream-line"></div>
+    </div>
+
+    <div class="roles-grid">
+      <div class="role-card" style="border-left:4px solid var(--gray-200);">
+        <div class="role-card-header" style="background:#F1EFE8;">
+          <div class="avatar" style="background:#888780;color:#FFF;">AD</div>
+          <div>
+            <div class="role-name">Administrator</div>
+            <div class="role-person">Andy Pochin &amp; Nafa Duwebi (shared)</div>
+          </div>
+        </div>
+        <div class="role-card-body">
+          <ul class="resp-list" style="--dot-color:#888780;">
+            <li style="padding-left:16px;position:relative;">
+              <span style="position:absolute;left:4px;top:7px;width:5px;height:5px;border-radius:50%;background:#888780;display:block;"></span>
+              Prepares documentation for annual business strategy and plans meetings
+            </li>
+            <li style="padding-left:16px;position:relative;">
+              <span style="position:absolute;left:4px;top:7px;width:5px;height:5px;border-radius:50%;background:#888780;display:block;"></span>
+              Manages procurement: assesses purchase requisition forms and obtains approvals
+            </li>
+            <li style="padding-left:16px;position:relative;">
+              <span style="position:absolute;left:4px;top:7px;width:5px;height:5px;border-radius:50%;background:#888780;display:block;"></span>
+              Sources and onboards new suppliers using the approved supplier process
+            </li>
+            <li style="padding-left:16px;position:relative;">
+              <span style="position:absolute;left:4px;top:7px;width:5px;height:5px;border-radius:50%;background:#888780;display:block;"></span>
+              Monitors office stationery stock and replenishes when necessary
+            </li>
+            <li style="padding-left:16px;position:relative;">
+              <span style="position:absolute;left:4px;top:7px;width:5px;height:5px;border-radius:50%;background:#888780;display:block;"></span>
+              Manages H&amp;S compliance alongside the Director
+            </li>
+          </ul>
+          <div class="process-tags">
+            <span class="ptag" style="background:#F1EFE8;color:#444441;border:1px solid #D3D1C7;">P16 — H&amp;S</span>
+            <span class="ptag" style="background:#F1EFE8;color:#444441;border:1px solid #D3D1C7;">P19 — Procurement</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════ TAB: PROCESS OWNERSHIP ══════════════ -->
+  <section class="section" id="tab-ownership">
+
+    <div class="section-heading">
+      <h2>Process Ownership</h2>
+      <span class="tag">All 25 processes</span>
+    </div>
+    <p class="section-desc">
+      Every one of our 25 QMS processes has a named owner — the person accountable for ensuring the process is followed, kept up to date, and audited each year. Use this table to find out who is responsible for any given process and which ISO 9001 clause it links to.
+    </p>
+    <div class="callout amber">
+      <strong>What does being a process owner mean?</strong> You are responsible for: (1) making sure the process is being followed in practice, (2) keeping the procedure documents up to date, (3) co-operating with the auditor during internal audits, and (4) closing any nonconformities or improvements raised against your process.
+    </div>
+
+    <table class="ownership-table">
+      <thead>
+        <tr>
+          <th style="width:40px;">#</th>
+          <th>Process name</th>
+          <th>Process owner</th>
+          <th>Role title</th>
+          <th>ISO clause</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="stream-row"><td colspan="5">DELIVER BUSINESS</td></tr>
+
+        <tr>
+          <td>1</td>
+          <td>Understand markets &amp; customers</td>
+          <td><span class="owner-chip" style="background:#E6F1FB;"><span class="owner-dot" style="background:#378ADD;"></span>Andy Pochin</span></td>
+          <td>Director UMC</td>
+          <td><span class="clause-tag">4.2</span></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Develop business strategy &amp; plans</td>
+          <td>
+            <span class="owner-chip" style="background:#E6F1FB;margin-right:4px;"><span class="owner-dot" style="background:#378ADD;"></span>Andy Pochin</span>
+            <span class="owner-chip" style="background:#E1F5EE;"><span class="owner-dot" style="background:#1D9E75;"></span>Josie Rothera</span>
+          </td>
+          <td>Director DBSP</td>
+          <td><span class="clause-tag">4.2</span> <span class="clause-tag">6.2</span> <span class="clause-tag">8.1</span> <span class="clause-tag">9.3</span></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Create &amp; maintain training courses</td>
+          <td><span class="owner-chip" style="background:#E1F5EE;"><span class="owner-dot" style="background:#1D9E75;"></span>Josie Rothera</span></td>
+          <td>Trainer CMTC</td>
+          <td><span class="clause-tag">8.3</span></td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Market services</td>
+          <td><span class="badge badge-amber">⚠ Owner TBC</span></td>
+          <td>Marketing Assistant MS</td>
+          <td><span class="clause-tag">8.1</span></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Receive training course enquiry</td>
+          <td><span class="owner-chip" style="background:#E1F5EE;"><span class="owner-dot" style="background:#1D9E75;"></span>Josie Rothera</span></td>
+          <td>Trainer RTCEER</td>
+          <td><span class="clause-tag">8.1</span> <span class="clause-tag">8.2</span></td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>Receive consultancy enquiry</td>
+          <td><span class="owner-chip" style="background:#FAECE7;"><span class="owner-dot" style="background:#D85A30;"></span>Dan Cascarina</span></td>
+          <td>Business Operations RCEER</td>
+          <td><span class="clause-tag">8.1</span> <span class="clause-tag">8.2</span></td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>Research &amp; present course options</td>
+          <td><span class="owner-chip" style="background:#E1F5EE;"><span class="owner-dot" style="background:#1D9E75;"></span>Josie Rothera</span></td>
+          <td>Trainer RPCO</td>
+          <td><span class="clause-tag">8.3</span></td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>Design &amp; produce bespoke training course</td>
+          <td><span class="owner-chip" style="background:#E1F5EE;"><span class="owner-dot" style="background:#1D9E75;"></span>Josie Rothera</span></td>
+          <td>Trainer DPBNTC</td>
+          <td><span class="clause-tag">8.3</span> <span class="clause-tag">8.6</span></td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td>Research &amp; present consultancy options</td>
+          <td><span class="owner-chip" style="background:#FAEEDA;"><span class="owner-dot" style="background:#BA7517;"></span>Nathan Spooner</span></td>
+          <td>Business Operations RPCO</td>
+          <td><span class="clause-tag">8.3</span></td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td>Deliver training course</td>
+          <td><span class="owner-chip" style="background:#E1F5EE;"><span class="owner-dot" style="background:#1D9E75;"></span>Josie Rothera</span></td>
+          <td>Trainer DTC</td>
+          <td><span class="clause-tag">8.1</span></td>
+        </tr>
+        <tr>
+          <td>11</td>
+          <td>Review delivery of training course</td>
+          <td><span class="owner-chip" style="background:#E1F5EE;"><span class="owner-dot" style="background:#1D9E75;"></span>Josie Rothera</span></td>
+          <td>Trainer RDTC</td>
+          <td><span class="clause-tag">5.1.2</span> <span class="clause-tag">8.2</span></td>
+        </tr>
+        <tr>
+          <td>12</td>
+          <td>Deliver consultancy &amp; review progress</td>
+          <td><span class="owner-chip" style="background:#FAECE7;"><span class="owner-dot" style="background:#D85A30;"></span>Dan Cascarina</span></td>
+          <td>Business Operations DCRPD</td>
+          <td><span class="clause-tag">8.1</span></td>
+        </tr>
+        <tr>
+          <td>13</td>
+          <td>Review delivery of consultancy</td>
+          <td><span class="owner-chip" style="background:#FAECE7;"><span class="owner-dot" style="background:#D85A30;"></span>Dan Cascarina</span></td>
+          <td>Business Operations RDC</td>
+          <td><span class="clause-tag">5.1.2</span> <span class="clause-tag">8.2</span></td>
+        </tr>
+
+        <tr class="stream-row"><td colspan="5">SUPPORT BUSINESS</td></tr>
+
+        <tr>
+          <td>14</td>
+          <td>Manage finances</td>
+          <td><span class="owner-chip" style="background:#E6F1FB;"><span class="owner-dot" style="background:#378ADD;"></span>Andy Pochin</span></td>
+          <td>Finance Manager MF</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>15</td>
+          <td>Manage insurances</td>
+          <td><span class="owner-chip" style="background:#EEEDFE;"><span class="owner-dot" style="background:#7F77DD;"></span>Nafa Duwebi</span></td>
+          <td>Office Manager MIE</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>16</td>
+          <td>Manage health, safety &amp; environment</td>
+          <td>
+            <span class="owner-chip" style="background:#E6F1FB;margin-right:4px;"><span class="owner-dot" style="background:#378ADD;"></span>Andy Pochin</span>
+            <span class="owner-chip" style="background:#EEEDFE;"><span class="owner-dot" style="background:#7F77DD;"></span>Nafa Duwebi</span>
+          </td>
+          <td>Administrator MHSE</td>
+          <td><span class="clause-tag">7.1</span></td>
+        </tr>
+        <tr>
+          <td>17</td>
+          <td>Achieve &amp; maintain accreditations</td>
+          <td><span class="owner-chip" style="background:#EEEDFE;"><span class="owner-dot" style="background:#7F77DD;"></span>Nafa Duwebi</span></td>
+          <td>Office Manager AMA</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>18</td>
+          <td>Operate quality management system</td>
+          <td><span class="owner-chip" style="background:#EEEDFE;"><span class="owner-dot" style="background:#7F77DD;"></span>Nafa Duwebi</span></td>
+          <td>Quality Manager OQMS</td>
+          <td><span class="clause-tag">4.3</span> <span class="clause-tag">4.4</span> <span class="clause-tag">5.2</span> <span class="clause-tag">5.3</span> <span class="clause-tag">6.2</span> <span class="clause-tag">7.3</span></td>
+        </tr>
+        <tr>
+          <td>19</td>
+          <td>Manage procurement &amp; suppliers</td>
+          <td>
+            <span class="owner-chip" style="background:#E6F1FB;margin-right:4px;"><span class="owner-dot" style="background:#378ADD;"></span>Andy Pochin</span>
+            <span class="owner-chip" style="background:#EEEDFE;"><span class="owner-dot" style="background:#7F77DD;"></span>Nafa Duwebi</span>
+          </td>
+          <td>Administrator MPS</td>
+          <td><span class="clause-tag">8.4</span> <span class="clause-tag">10.2</span></td>
+        </tr>
+        <tr>
+          <td>20</td>
+          <td>Recruit &amp; develop people</td>
+          <td><span class="owner-chip" style="background:#FBEAF0;"><span class="owner-dot" style="background:#D4537E;"></span>Jessica Baily</span></td>
+          <td>People &amp; Culture RDP</td>
+          <td><span class="clause-tag">7.1</span> <span class="clause-tag">7.2</span></td>
+        </tr>
+        <tr>
+          <td>21</td>
+          <td>Manage documented information</td>
+          <td><span class="owner-chip" style="background:#EEEDFE;"><span class="owner-dot" style="background:#7F77DD;"></span>Nafa Duwebi</span></td>
+          <td>Quality Manager MDI</td>
+          <td><span class="clause-tag">7.5</span></td>
+        </tr>
+        <tr>
+          <td>22</td>
+          <td>Manage infrastructure &amp; environment</td>
+          <td><span class="owner-chip" style="background:#EEEDFE;"><span class="owner-dot" style="background:#7F77DD;"></span>Nafa Duwebi</span></td>
+          <td>Office Manager MIE</td>
+          <td><span class="clause-tag">7.1</span></td>
+        </tr>
+        <tr>
+          <td>23</td>
+          <td>Evaluate business performance</td>
+          <td><span class="owner-chip" style="background:#E1F5EE;"><span class="owner-dot" style="background:#1D9E75;"></span>Josie Rothera</span></td>
+          <td>Director EBP</td>
+          <td><span class="clause-tag">4.2</span> <span class="clause-tag">5.1.2</span> <span class="clause-tag">9.1</span> <span class="clause-tag">9.3</span> <span class="clause-tag">10.2</span></td>
+        </tr>
+        <tr>
+          <td>24</td>
+          <td>Conduct internal quality audits</td>
+          <td><span class="owner-chip" style="background:#EEEDFE;"><span class="owner-dot" style="background:#7F77DD;"></span>Nafa Duwebi</span></td>
+          <td>Quality Manager MIA</td>
+          <td><span class="clause-tag">9.2</span> <span class="clause-tag">10.2</span></td>
+        </tr>
+        <tr>
+          <td>25</td>
+          <td>Manage improvement</td>
+          <td><span class="owner-chip" style="background:#EEEDFE;"><span class="owner-dot" style="background:#7F77DD;"></span>Nafa Duwebi</span></td>
+          <td>Office Manager MI</td>
+          <td><span class="clause-tag">5.1</span> <span class="clause-tag">6.3</span> <span class="clause-tag">10.1</span> <span class="clause-tag">10.2</span> <span class="clause-tag">10.3</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout teal">
+      <strong>ISO clause numbers explained:</strong> Every clause number refers to a specific requirement in the ISO 9001:2015 standard. For example, Clause 8.3 covers design and development of products and services. If your process has a clause number next to it, that means an external auditor (SGS) can inspect that process during a surveillance visit.
+    </div>
+
+  </section>
+
+  <!-- ══════════════ TAB: RACI MATRIX ══════════════ -->
+  <section class="section" id="tab-raci">
+
+    <div class="section-heading">
+      <h2>RACI Matrix</h2>
+      <span class="tag">Responsibility assignment</span>
+    </div>
+    <p class="section-desc">
+      The RACI matrix shows, for every QMS process, who is Responsible for doing the work, who is Accountable for the outcome, who should be Consulted, and who needs to be kept Informed. It is a simple way of making sure nothing falls through the cracks.
+    </p>
+
+    <div class="callout">
+      <strong>What do R, A, C, I mean?</strong>
+    </div>
+
+    <div class="raci-legend">
+      <div class="raci-legend-item"><span class="raci-r">R</span> <strong>Responsible</strong> — the person who actually does the work</div>
+      <div class="raci-legend-item"><span class="raci-a">A</span> <strong>Accountable</strong> — the person who is ultimately answerable for the outcome (usually the process owner)</div>
+      <div class="raci-legend-item"><span class="raci-c">C</span> <strong>Consulted</strong> — someone whose input is needed before decisions are made</div>
+      <div class="raci-legend-item"><span class="raci-i">I</span> <strong>Informed</strong> — someone who needs to be kept updated on progress or outcomes</div>
+    </div>
+
+    <div class="callout amber">
+      <strong>Simple rule:</strong> Every process must have exactly one person marked <span class="raci-a">A</span>. There can be multiple <span class="raci-r">R</span> or <span class="raci-i">I</span> entries, but only one person is ultimately accountable.
+    </div>
+
+    <div class="raci-section">
+      <table class="raci-table">
+        <thead>
+          <tr>
+            <th style="width:30%;">Process</th>
+            <th>Director<br><span style="font-weight:400;opacity:0.7;font-size:10px;">Andy P</span></th>
+            <th>Training Dir.<br><span style="font-weight:400;opacity:0.7;font-size:10px;">Josie R</span></th>
+            <th>BDM<br><span style="font-weight:400;opacity:0.7;font-size:10px;">Dan C</span></th>
+            <th>Head of Del.<br><span style="font-weight:400;opacity:0.7;font-size:10px;">Nathan S</span></th>
+            <th>QM<br><span style="font-weight:400;opacity:0.7;font-size:10px;">Nafa D</span></th>
+            <th>HR<br><span style="font-weight:400;opacity:0.7;font-size:10px;">Jess B</span></th>
+            <th>Finance<br><span style="font-weight:400;opacity:0.7;font-size:10px;">Andrew</span></th>
+            <th>Mktg<br><span style="font-weight:400;opacity:0.7;font-size:10px;">TBC</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background:#F0EFE9;"><td colspan="9" style="font-weight:600;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#5F5E5A;padding:7px 12px;">DELIVER BUSINESS</td></tr>
+          <tr><td>1. Understand markets &amp; customers</td><td><span class="raci-a">A</span></td><td><span class="raci-c">C</span></td><td><span class="raci-i">I</span></td><td></td><td><span class="raci-i">I</span></td><td></td><td></td><td></td></tr>
+          <tr><td>2. Business strategy &amp; plans</td><td><span class="raci-a">A</span></td><td><span class="raci-r">R</span></td><td><span class="raci-i">I</span></td><td><span class="raci-i">I</span></td><td><span class="raci-c">C</span></td><td><span class="raci-i">I</span></td><td><span class="raci-i">I</span></td><td></td></tr>
+          <tr><td>3. Create &amp; maintain training courses</td><td><span class="raci-c">C</span></td><td><span class="raci-a">A</span></td><td></td><td></td><td><span class="raci-i">I</span></td><td></td><td></td><td></td></tr>
+          <tr><td>4. Market services</td><td><span class="raci-a">A</span></td><td><span class="raci-c">C</span></td><td></td><td></td><td><span class="raci-i">I</span></td><td></td><td></td><td><span class="raci-r">R</span></td></tr>
+          <tr><td>5. Receive training enquiry</td><td></td><td><span class="raci-a">A</span></td><td></td><td></td><td><span class="raci-i">I</span></td><td></td><td><span class="raci-i">I</span></td><td></td></tr>
+          <tr><td>6. Receive consultancy enquiry</td><td><span class="raci-i">I</span></td><td></td><td><span class="raci-a">A</span></td><td></td><td><span class="raci-i">I</span></td><td></td><td><span class="raci-i">I</span></td><td></td></tr>
+          <tr><td>7. Research &amp; present course options</td><td></td><td><span class="raci-a">A</span></td><td></td><td></td><td><span class="raci-i">I</span></td><td></td><td></td><td></td></tr>
+          <tr><td>8. Design bespoke training course</td><td><span class="raci-i">I</span></td><td><span class="raci-a">A</span></td><td></td><td></td><td><span class="raci-i">I</span></td><td></td><td></td><td></td></tr>
+          <tr><td>9. Research &amp; present consultancy options</td><td><span class="raci-i">I</span></td><td></td><td><span class="raci-c">C</span></td><td><span class="raci-a">A</span></td><td><span class="raci-i">I</span></td><td></td><td></td><td></td></tr>
+          <tr><td>10. Deliver training course</td><td></td><td><span class="raci-a">A</span></td><td></td><td></td><td><span class="raci-i">I</span></td><td></td><td><span class="raci-c">C</span></td><td></td></tr>
+          <tr><td>11. Review training course delivery</td><td></td><td><span class="raci-a">A</span></td><td></td><td></td><td><span class="raci-i">I</span></td><td></td><td></td><td></td></tr>
+          <tr><td>12. Deliver consultancy</td><td><span class="raci-c">C</span></td><td></td><td><span class="raci-a">A</span></td><td><span class="raci-r">R</span></td><td><span class="raci-i">I</span></td><td></td><td><span class="raci-i">I</span></td><td></td></tr>
+          <tr><td>13. Review consultancy delivery</td><td><span class="raci-i">I</span></td><td></td><td><span class="raci-a">A</span></td><td><span class="raci-r">R</span></td><td><span class="raci-i">I</span></td><td></td><td></td><td></td></tr>
+          <tr style="background:#F0EFE9;"><td colspan="9" style="font-weight:600;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#5F5E5A;padding:7px 12px;">SUPPORT BUSINESS</td></tr>
+          <tr><td>14. Manage finances</td><td><span class="raci-a">A</span></td><td></td><td></td><td></td><td><span class="raci-i">I</span></td><td></td><td><span class="raci-r">R</span></td><td></td></tr>
+          <tr><td>15. Manage insurances</td><td><span class="raci-c">C</span></td><td></td><td></td><td></td><td><span class="raci-a">A</span></td><td></td><td><span class="raci-i">I</span></td><td></td></tr>
+          <tr><td>16. Manage H&amp;S &amp; environment</td><td><span class="raci-a">A</span></td><td><span class="raci-i">I</span></td><td></td><td></td><td><span class="raci-r">R</span></td><td><span class="raci-c">C</span></td><td></td><td></td></tr>
+          <tr><td>17. Achieve &amp; maintain accreditations</td><td><span class="raci-c">C</span></td><td><span class="raci-r">R</span></td><td></td><td></td><td><span class="raci-a">A</span></td><td></td><td></td><td></td></tr>
+          <tr><td>18. Operate QMS</td><td><span class="raci-a">A</span></td><td><span class="raci-i">I</span></td><td><span class="raci-i">I</span></td><td><span class="raci-i">I</span></td><td><span class="raci-r">R</span></td><td><span class="raci-i">I</span></td><td><span class="raci-i">I</span></td><td></td></tr>
+          <tr><td>19. Manage procurement &amp; suppliers</td><td><span class="raci-a">A</span></td><td></td><td></td><td></td><td><span class="raci-r">R</span></td><td></td><td><span class="raci-i">I</span></td><td></td></tr>
+          <tr><td>20. Recruit &amp; develop people</td><td><span class="raci-c">C</span></td><td><span class="raci-i">I</span></td><td></td><td></td><td><span class="raci-i">I</span></td><td><span class="raci-a">A</span></td><td></td><td></td></tr>
+          <tr><td>21. Manage documented information</td><td><span class="raci-c">C</span></td><td><span class="raci-i">I</span></td><td><span class="raci-i">I</span></td><td><span class="raci-i">I</span></td><td><span class="raci-a">A</span></td><td><span class="raci-i">I</span></td><td><span class="raci-i">I</span></td><td></td></tr>
+          <tr><td>22. Manage infrastructure &amp; environment</td><td><span class="raci-c">C</span></td><td><span class="raci-i">I</span></td><td><span class="raci-i">I</span></td><td></td><td><span class="raci-a">A</span></td><td></td><td></td><td></td></tr>
+          <tr><td>23. Evaluate business performance</td><td><span class="raci-a">A</span></td><td><span class="raci-r">R</span></td><td><span class="raci-i">I</span></td><td><span class="raci-i">I</span></td><td><span class="raci-r">R</span></td><td><span class="raci-i">I</span></td><td><span class="raci-r">R</span></td><td></td></tr>
+          <tr><td>24. Conduct internal quality audits</td><td><span class="raci-i">I</span></td><td><span class="raci-i">I</span></td><td><span class="raci-i">I</span></td><td><span class="raci-i">I</span></td><td><span class="raci-a">A</span></td><td><span class="raci-i">I</span></td><td><span class="raci-i">I</span></td><td></td></tr>
+          <tr><td>25. Manage improvement</td><td><span class="raci-c">C</span></td><td><span class="raci-i">I</span></td><td><span class="raci-i">I</span></td><td><span class="raci-i">I</span></td><td><span class="raci-a">A</span></td><td><span class="raci-i">I</span></td><td><span class="raci-i">I</span></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </section>
+
+  <!-- ══════════════ TAB: FAQs ══════════════ -->
+  <section class="section" id="tab-faq">
+
+    <div class="section-heading">
+      <h2>Frequently Asked Questions</h2>
+      <span class="tag">For all staff</span>
+    </div>
+    <p class="section-desc">
+      Common questions about roles, responsibilities, and the QMS — answered in plain language. Click any question to expand the answer.
+    </p>
+
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          What is a process owner and what do I need to do if I am one?
+          <span class="faq-chevron">▼</span>
+        </button>
+        <div class="faq-a">
+          <p>A process owner is the person responsible for a specific QMS process. It means you are accountable for making sure the process is being followed correctly in day-to-day work, that the procedure document stays accurate and up to date, and that any nonconformities or improvements raised against your process are addressed on time.</p>
+          <br>
+          <p>In practice, your main responsibilities are: (1) co-operating with the internal auditor when your process is being reviewed each year, (2) reviewing your procedure documents periodically and flagging if anything needs updating, and (3) raising an improvement on the Improvement Log if you spot a problem or a better way of working.</p>
+          <br>
+          <p>You do not need to be a QMS expert. The Quality Manager (Nafa) is available to support you at every step.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          What happens during an internal audit — and will I be involved?
+          <span class="faq-chevron">▼</span>
+        </button>
+        <div class="faq-a">
+          <p>An internal audit is a structured review of how well a QMS process is being followed. Every year, each of our 25 processes goes through an internal audit. The audit is conducted by a trained auditor and the process owner, and it checks whether the documented procedure matches what actually happens in practice.</p>
+          <br>
+          <p>If you are a process owner, you will be directly involved. The auditor will ask you questions about how the process works and may ask to see evidence (emails, forms, records) that the steps have been followed. If you are a team member who carries out work in a process, you may also be asked questions — this is normal and nothing to be concerned about.</p>
+          <br>
+          <p>The output of an audit is a report with a conformity score and any nonconformities or improvement ideas noted. Nonconformities are not personal criticisms — they are system findings that the process owner then works to resolve.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          What is a nonconformity and what do I need to do if one is raised?
+          <span class="faq-chevron">▼</span>
+        </button>
+        <div class="faq-a">
+          <p>A nonconformity (sometimes called an NC) is a finding where the evidence shows that a process step is not being followed as documented, or a required record does not exist. It is not a disciplinary issue — it is a quality system finding that needs to be investigated and resolved.</p>
+          <br>
+          <p>If a nonconformity is raised against your process: (1) it will be logged on the Active Improvement Log by the Quality Manager, (2) you will be given a target date to resolve it, (3) you need to identify why it happened (root cause), implement a fix, and provide evidence that the fix has worked. The Quality Manager will then verify and close the item.</p>
+          <br>
+          <p>Unresolved nonconformities can become findings at the external SGS audit, so it is important to address them promptly.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          What is the difference between the internal audit and the SGS external audit?
+          <span class="faq-chevron">▼</span>
+        </button>
+        <div class="faq-a">
+          <p>Our internal audits are carried out by our own trained staff each year across all 25 processes. They are planned and managed by Nafa (Quality Manager) and are designed to spot any gaps before an external body visits.</p>
+          <br>
+          <p>The SGS audit (our external audit) is conducted by an independent body called SGS, who assess whether PL Projects meets the requirements of ISO 9001:2015. This happens approximately once a year as a surveillance visit. SGS can raise their own nonconformities and observations — these carry more weight and must be resolved within the agreed timescale.</p>
+          <br>
+          <p>Think of the internal audit as a rehearsal that prepares us for the SGS visit. Our current SGS certification is valid until August 2027.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Where do I find QMS documents and which version should I use?
+          <span class="faq-chevron">▼</span>
+        </button>
+        <div class="faq-a">
+          <p>All current QMS documents are stored on our SharePoint site in the QMS section — accessible from the left-hand menu. The Process Architecture page shows all process flowcharts and procedures in their latest approved versions.</p>
+          <br>
+          <p>Always use the document from the SharePoint QMS area. Do not use copies saved on your personal desktop or email attachments — these may be out of date. Every QMS document has a version number and issue date on it. If you are unsure which version is current, contact Nafa.</p>
+          <br>
+          <p>If you notice a document that appears outdated, incorrect, or missing, please raise it with Nafa so it can be reviewed and updated through the formal document control process.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          How do I raise an improvement idea or flag a problem?
+          <span class="faq-chevron">▼</span>
+        </button>
+        <div class="faq-a">
+          <p>Anyone at PL Projects can raise an improvement. If you spot something that could be done better, or notice a problem with a process, you can either: (1) speak directly to the process owner or the Quality Manager (Nafa), or (2) use the improvement log process — Nafa can log it on your behalf if needed.</p>
+          <br>
+          <p>Every improvement idea goes on the Active Improvement Log and is given a priority rating, an owner, and a target date. It is then tracked until it is implemented and closed. You will be kept informed of progress if you raised the item.</p>
+          <br>
+          <p>Do not wait for an audit to flag a problem. Continual improvement is everyone's responsibility — and raising things early is always better than waiting for an auditor to find them.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          What does ISO 9001:2015 actually require from me as a staff member?
+          <span class="faq-chevron">▼</span>
+        </button>
+        <div class="faq-a">
+          <p>ISO 9001:2015 requires that the organisation has documented processes, follows them, and can demonstrate this through records. As a staff member, your main obligations under ISO 9001 are:</p>
+          <br>
+          <p><strong>1. Follow the documented procedure</strong> for any process you are involved in. If the procedure does not match how you actually work, tell the process owner — do not just work around it.</p>
+          <br>
+          <p><strong>2. Keep records</strong> as required by your process. For example, if a process asks you to complete a form or log something in a system, make sure this is done consistently.</p>
+          <br>
+          <p><strong>3. Be aware of the Quality Policy.</strong> PL Projects' Quality Policy sets out our commitment to customers. All staff are expected to understand it — it is published on SharePoint.</p>
+          <br>
+          <p><strong>4. Engage with audits.</strong> If you are asked to take part in an internal or external audit, co-operate fully and answer questions honestly. Auditors are not trying to catch you out — they are checking the system, not the person.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Who should I contact if I have a question about the QMS?
+          <span class="faq-chevron">▼</span>
+        </button>
+        <div class="faq-a">
+          <p>For any question about the QMS, process documents, audits, or the Improvement Log, the first point of contact is <strong>Nafa Duwebi</strong> (Quality Manager). Nafa manages the day-to-day operation of the QMS and can answer most questions or direct you to the right person.</p>
+          <br>
+          <p>For questions about a specific process — for example, how a training enquiry should be handled — speak to the process owner for that process. The process ownership table on the Process Ownership tab shows who owns each process.</p>
+          <br>
+          <p>For strategic decisions about the QMS or significant proposed changes, Andy Pochin (Director) provides final sign-off.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="page-footer">
+  <strong>PL Projects Ltd</strong> — QMS Roles &amp; Responsibilities Guide · v1.0 · January 2026<br>
+  Based on Roles &amp; Responsibility Matrix v2.3 · ISO 9001:2015 Certified by SGS (valid to August 2027)
+</footer>
+
+<script>
+  function showTab(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    event.currentTarget.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    item.classList.toggle('open');
+  }
+</script>
+
+</body>
+</html>
